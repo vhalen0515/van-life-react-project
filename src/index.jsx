@@ -15,6 +15,7 @@ import Vans from './pages/Vans/Vans'
 import VanDetail from './pages/Vans/VanDetail'
 import Layout from './components/Layout'
 import HostLayout from './components/HostLayout'
+import NotFound from './pages/NotFound'
 import "../server"
 import './index.css'
 
@@ -39,6 +40,7 @@ export default function App() {
               <Route path='photos' element={<HostVanPhotos />} />
             </Route>
           </Route>
+          <Route path='*' element={<NotFound />} />
         </Route>
       </Routes>
   </BrowserRouter>

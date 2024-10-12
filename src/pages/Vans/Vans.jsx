@@ -6,17 +6,23 @@ export default function Vans() {
     const [searchParams, setSearchParams] = useSearchParams()
     const [vans, setVans] = React.useState([])
     const [loading, setLoading] = React.useState(false)
+    const [error, setError] = React.useState(null)
 
     const typeFilter = searchParams.get("type")
 
     React.useEffect(() => {
         async function loadVans() {
             setLoading(true)
-            const data = await getVans()
-            setVans(data)
-            setLoading(false)
+            try {
+                const data = await getVans()
+                setVans(data)
+            } catch (err) {
+                setError(err)
+            } finally {
+                setLoading(false)
+            }
         }
-        
+
         loadVans()
     }, [])
 
@@ -26,9 +32,9 @@ export default function Vans() {
 
     const vanElements = displayedVans.map(van => (
         <div key={van.id} className="van-tile">
-            <Link 
+            <Link
                 to={van.id}
-                state={{ 
+                state={{
                     search: `?${searchParams.toString()}`,
                     type: typeFilter
                 }}
@@ -57,6 +63,10 @@ export default function Vans() {
     if (loading) {
         return <h1>Loading...</h1>
     }
+    
+    if (error) {
+        return <h1>There was an error: {error.message}</h1>
+    }
 
     return (
         <div className="van-list-container">
@@ -65,19 +75,22 @@ export default function Vans() {
                 <button
                     onClick={() => handleFilterChange("type", "simple")}
                     className={
-                        `van-type simple ${typeFilter === "simple" ? "selected" : ""}`
+                        `van-type simple 
+                        ${typeFilter === "simple" ? "selected" : ""}`
                     }
                 >Simple</button>
                 <button
                     onClick={() => handleFilterChange("type", "luxury")}
                     className={
-                        `van-type luxury ${typeFilter === "luxury" ? "selected" : ""}`
+                        `van-type luxury 
+                        ${typeFilter === "luxury" ? "selected" : ""}`
                     }
                 >Luxury</button>
                 <button
                     onClick={() => handleFilterChange("type", "rugged")}
                     className={
-                        `van-type rugged ${typeFilter === "rugged" ? "selected" : ""}`
+                        `van-type rugged 
+                        ${typeFilter === "rugged" ? "selected" : ""}`
                     }
                 >Rugged</button>
 

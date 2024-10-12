@@ -1,6 +1,6 @@
-import React from 'react'
-import { Link } from "react-router-dom"
+import React from "react"
 import bgImg from "../assets/about-hero.png"
+import { Link } from "react-router-dom"
 
 export default function About() {
     return (
@@ -16,5 +16,5 @@ export default function About() {
                 <Link className="link-button" to="/vans">Explore our vans</Link>
             </div>
         </div>
-    )
+    );
 }
